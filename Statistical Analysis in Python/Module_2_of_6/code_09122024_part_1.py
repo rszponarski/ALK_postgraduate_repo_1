@@ -29,3 +29,14 @@ for column in columns:
     print(f"Column name: {column}")
     print(f"Mean value: {mean_value}")
     print(f"Variation: {var_value}")
+
+# TASK 3
+print("-----")
+
+for column in columns:
+    mean_value = round(data[column].mean(), 2)
+    std_value = round(data[column].std(), 2)
+
+    print(f"Column name: {column}")
+    print(f"Mean value: {mean_value}")
+    print(f"Standard deviation: {std_value}")
