@@ -1,0 +1,41 @@
+Shapiro-Wilk Test
+The Shapiro-Wilk test is one of the most commonly used tests to check the normality of data.
+* Its null hypothesis (H0) states that the data comes from a normal distribution.
+If the p-value is greater than a certain significance level (e.g. 0.05), there is not enough evidence to reject
+the null hypothesis, i.e. we can assume that the data comes from a normal distribution.
+
+----------------------------------------------------------------------
+Hypothesis Testing Process
+
+1. Hypothesis Formulation
+H₀ (Null Hypothesis): Assumes no difference, no effect, no relationship between variables.
+H₁ (Alternative Hypothesis): Assumes that differences, an effect, or a relationship exist.
+
+2. Selecting the appropriate statistical test
+Depending on the nature of the data (continuous, categorical) and the purpose of the study
+(e.g., comparison of means, relationships), an appropriate test is selected.
+
+3. Calculating the Test Value and P-Value
+Test value: The result of a test (e.g., t, chi-square) that measures how strong the evidence is against
+the null hypothesis.
+p-value: The p-value measures the probability of obtaining results that are at least as extreme as the
+observed results, assuming the null hypothesis is true.
+
+4. Decision Making
+If the p-value is less than a specified level of significance (e.g., 0.05), we reject the null hypothesis
+and accept the alternative hypothesis.
+If the p-value is greater than the significance level, we do not have enough evidence to reject the null
+hypothesis, meaning that there is not enough evidence for an effect.
+----------------------------------------------------------------------
+Summary
+
+The null hypothesis (H₀) states that there is no difference or effect
+If the p-value is less than 0.05, we reject the null hypothesis and accept the alternative hypothesis
+and the alternative hypothesis (H₁) states that there is a difference or effect.
+
+p-value < 0.05 THEN REJECT H0, ACCEPT H1
+
+p-value > 0.05 THEN there is no evidence of non-normality SO the data are normally distributed
+
+example: p-value = 0.0021 < 0.05, which indicates that the data are not normally distributed
+(we reject the hypothesis of normality).

@@ -1,6 +1,6 @@
 import numpy as np
 '''
-TASK 5
+TASK 6
 Identifying samples that appear to deviate from the typical expression pattern,
 --> those that are outside the range of two standard deviations from the mean.
 '''
