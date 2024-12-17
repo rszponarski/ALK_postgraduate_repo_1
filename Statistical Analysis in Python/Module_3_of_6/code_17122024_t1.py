@@ -13,13 +13,20 @@ confidence_interval = stats.norm.interval(0.95, loc=mean_estimate, scale=stats.s
 # Calculating the confidence interval       confidence level, loc=location parameter, scale=SEM
 
 print(f"Mean estimate for {column_name}: {mean_estimate:.2f}")
-print(f"Confidence interval for {column_name}: {list(confidence_interval)}")
-print("-----explanation")
+print(f"Confidence interval for {column_name}: {confidence_interval}")
+print(f"Confidence interval for Nitrate concentration: [{float(confidence_interval[0]):.4f},"
+      f"{float(confidence_interval[1]):.4f}]")
+
+confidence_interval_clean = [float(value) for value in confidence_interval]
+print(f"Confidence interval for Nitrate concentration: {confidence_interval_clean}")
+
+print("\n-----explanation")
 print(f"SEM: {stats.sem(data[column_name])}")
-z_critical = stats.norm.ppf(0.975)  # 5%/2=0.025 -> 1-0.025=0.975
-print(z_critical)  # result: 1.959963984540054
-print(mean_estimate - z_critical * stats.sem(data[column_name]))
-print(mean_estimate + z_critical * stats.sem(data[column_name]))
+z_critical_min = stats.norm.ppf(0.025)
+z_critical_max = stats.norm.ppf(0.975)  # 5%/2=0.025 -> 1-0.025=0.975
+print(z_critical_min, z_critical_max)  # result: 1.959963984540054
+print(mean_estimate - z_critical_max * stats.sem(data[column_name]))
+print(mean_estimate + z_critical_max * stats.sem(data[column_name]))
 
 '''
 NOTES:
