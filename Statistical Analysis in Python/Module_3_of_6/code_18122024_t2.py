@@ -18,8 +18,10 @@ print(len(data[column_name])-1)
 # Reducing the number of samples by one, i.e. using n−1, follows from the concept of degrees of freedom in statistics.
 
 print(f"Confidence interval for {column_name}: {confidence_interval}")
+print("THE TRUE AVERAGE HEIGHT OF BIRCHES WITH A CERTAIN ASSUMED PROBABILITY IS IN THIS RANGE")
 
 '''
+NOTES:
 Calculating a confidence interval:
     ___stats.t.interval: A function from the scipy.stats module to calculate confidence intervals
     based on the Student's t-distribution.
