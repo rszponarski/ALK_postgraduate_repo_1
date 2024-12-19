@@ -49,3 +49,4 @@ if p_value < alpha:
     print("Odrzucamy hipotezę zerową - istnieją istotne statystycznie różnice między obszarami.")
 else:
     print("Nie ma podstaw do odrzucenia hipotezy zerowej - brak istotnych statystycznie różnic między obszarami.")
+
