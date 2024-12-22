@@ -32,7 +32,7 @@ else:
 --> If we wanted to compare means across three groups using the Student t-test, we would need to run three separate
     tests (Area1 vs. Area2, Area1 vs. Area3, Area2 vs. Area3).
 --> ANOVA allows us to clearly and once test differences across multiple groups without increasing
-    the risk of Type I error (false rejection of H₀).
+    the risk of Type I error (false rejection of H0).
 
 ** When to use ANOVA? **
     - When we want to see if the means across three or more groups are statistically significantly different.
