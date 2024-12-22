@@ -17,6 +17,11 @@ else:
     print("Występuje słaba korelacja monotoniczna lub jej brak.")
 
 '''
+RESULT:
+A p-value of 0.28 is significantly greater than the typical significance level of 0.05.
+This means that we do not have enough evidence to reject the null hypothesis that there is no monotonic correlation
+between the variables.
+
 NOTES:
 Spearman correlation is a nonparametric measure that indicates the strength
 and direction of a monotonic relationship between two variables.
