@@ -4,6 +4,11 @@ import pandas as pd
 
 # Data reading
 df = pd.read_csv("pizza.csv").drop(["brand", "id"], axis=1)
+'''Loads the data and then removes the "brand" and "id" columns because:
+* The "brand" column contains text categories that are not needed for correlation calculations.
+* The "id" column is a unique identifier that does not affect the analysis of the relationships between variables.
+'''
+
 
 corr_matrix = df.corr()
 
