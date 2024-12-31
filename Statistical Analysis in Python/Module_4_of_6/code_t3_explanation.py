@@ -19,7 +19,7 @@ eigenvalues = pca.explained_variance_
 prop_var = eigenvalues / np.sum(eigenvalues)
 
 # Wyświetlanie wyników
-for i, (eigen, prop) in enumerate(zip(eigenvalues, prop_var), start=1):
+for i, (eigen, prop) in enumerate(zip(eigenvalues, prop_var), start=1):  # patrz koniec
     print(f"Składowa PC{i}:")
     # print(f"  Wartość własna (eigenvalue): {eigen}")
     print(f"  Proporcja wyjaśnianej wariancji: {prop:.4f}")
@@ -97,4 +97,29 @@ Proporcja wyjaśnianej wariancji:
 
 Proporcja wyjaśnionej wariancji dla każdej składowej to stosunek wariancji, którą ta składowa wyjaśnia,
 do całkowitej wariancji w danych.
+'''
+
+''' ad. ZIP
+-- funkcja zip odpowiada za sparowanie dwóch list (lub iterowalnych obiektów), aby elementy o tych samych indeksach
+mogły być przetwarzane równocześnie w jednej pętli.
+
+    eigenvalues = [2.3, 1.5, 0.8]
+    prop_var = [0.6, 0.3, 0.1]
+    list(zip(eigenvalues, prop_var))
+    # Wynik: [(2.3, 0.6), (1.5, 0.3), (0.8, 0.1)]
+
+-- Funkcja zip działa w ten sposób, że zatrzymuje się na najkrótszej liście.
+Jeśli długości wejściowych list (lub innych iterowalnych obiektów) są różne, funkcja automatycznie ignoruje
+    "nadmiarowe" elementy z dłuższej listy.
+
+Przykład działania
+Załóżmy, że mamy dwie listy o różnej długości:
+    list1 = [1, 2, 3, 4]
+    list2 = ['a', 'b']
+Kiedy wykonamy zip:
+    zipped = zip(list1, list2)
+    print(list(zipped))
+
+Wynik:
+    [(1, 'a'), (2, 'b')]
 '''
