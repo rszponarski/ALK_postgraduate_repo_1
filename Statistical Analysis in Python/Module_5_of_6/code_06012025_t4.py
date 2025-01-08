@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 
 # Data reading
-df = pd.read_csv("seeds_dataset.csv")
+df = pd.read_csv("seeds_dataset_2.csv")
 
 X = df.drop(["Type of seed"], axis=1)
 y_true = df["Type of seed"]
