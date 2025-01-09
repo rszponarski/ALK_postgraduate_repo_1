@@ -131,6 +131,72 @@ Ale w T1:
 Natomiast w T2:
 	kmeans.fit_predict(df_scaled)
 
+Różnica między kmeans.fit(df_scaled) a kmeans.fit_predict(df_scaled) leży w tym, co zwracają i co robią te metody. Przyjrzyjmy się szczegółowo:
 
+---------A. kmeans.fit(df_scaled)
+**Co robi?
+Dopasowuje model K-means do danych.
+Ustala położenie centroidów dla podanej liczby klastrów.
+Nie zwraca niczego istotnego dla dalszego użycia (zwraca tylko sam obiekt KMeans).
 
+**Jak działa w praktyce?
+Oblicza centroidy klastrów.
+Model K-means jest gotowy do użycia np. do przewidywania klastrów za pomocą metody predict().
+
+---------B. kmeans.fit_predict(df_scaled)
+**Co robi?
+Dopasowuje model K-means do danych (tak jak fit()).
+Dodatkowo zwraca etykiety klastrów (czyli informację o tym, do którego klastra należy każdy punkt w danych).
+
+**Jak działa w praktyce?
+Oblicza centroidy klastrów.
+Od razu przypisuje punkty do klastrów.
+Zwraca etykiety (numery klastrów) dla każdego punktu.
+
+**************************************************************************************
+11. Co to algorytm t-SNE?
+--> t-SNE (t-Distributed Stochastic Neighbor Embedding)
+-to zaawansowana metoda redukcji wymiarowości, która jest szeroko stosowana w analizie danych o wysokiej liczbie wymiarów.
+
+Celem t-SNE jest przedstawienie danych w sposób dwuwymiarowy lub wielowymiarowy, jednocześnie utrzymując ich strukturę podobieństwa w oryginalnej przestrzeni.
+
+*** Główne cechy t-SNE:
+==> Redukcja wymiarowości: t-SNE zmniejsza liczbę cech z wysokiej liczby (np. 100 lub więcej) do dwóch lub trzech wymiarów, co pozwala na lepszą wizualizację danych.
+==> Uwzględnianie odległości podobieństwa: Algorytm stara się zachować jak najwięcej podobieństw między danymi. Zamiast zwykłych odległości euklidesowych, t-SNE koncentruje się na tzw. odległościach prawdopodobieństw, które bardziej odzwierciedlają stosunek podobieństwa niż zwykłe wartości odległości. !!!!!
+==> Nieliniowa transformacja: W przeciwieństwie do innych metod, takich jak PCA (Principal Component Analysis), t-SNE często stosuje nieliniową transformację danych, aby lepiej oddać bardziej skomplikowane zależności między punktami danych.
+
+*** Proces działania t-SNE:
+---> Obliczanie podobieństwa: Na początku obliczana jest odległość prawdopodobieństwa między danymi (np. Euclidean Distance) lub inne podobieństwa dla większych zestawów danych.
+	tzn. Na początku algorytm oblicza odległości euklidesowe pomiędzy punktami w oryginalnej przestrzeni wielowymiarowej. Następnie te odległości są przekształcane w miary podobieństwa za pomocą funkcji Gaussa (rozmytego rozkładu prawdopodobieństwa= soft probability distribution).
+---> Stworzenie rozkładu odległości: Na podstawie podobieństw tworzy się macierz prawdopodobieństw dla najbliższych sąsiadów (tzw. "soft probability distribution").
+---> Obniżenie wymiarów: Następuje nieliniowa redukcja wymiarów do wybranej liczby komponentów (najczęściej 2 lub 3), starając się jak najlepiej odzwierciedlić stosunki podobieństwa w wyższej przestrzeni.
+
+$$$ Koszty obliczeniowe:
+T-SNE jest kosztowną metodą pod względem obliczeń, ponieważ każda iteracja wykorzystuje algorytm iteracyjny, który znajduje optymalne położenie punktów w przestrzeni niskowymiarowej.
+Porównanie t-SNE z innymi metodami:
+PCA (Principal Component Analysis) – PCA oblicza liniowe transformacje, które maksymalizują wariancję danych, ale niekoniecznie uwzględnia nieliniowe zależności.
+
+t-SNE – Stosuje nieliniową transformację, aby lepiej odwzorować podobieństwa między danymi w wysokiej liczbie wymiarów.
+
+***Zalety t-SNE:
+-Zachowuje strukturę podobieństw w danych o wysokich wymiarach.
+-Umożliwia wizualizację bardziej skomplikowanych zależności między danymi.
+-Bardziej odpowiednia dla danych z nieliniowymi cechami.
+
+***Wady t-SNE:
+-Bardzo czasochłonna dla dużych zbiorów danych.
+-Wyniki mogą być podatne na różne konfiguracje hiperparametrów (np. liczba iteracji, rozmiar próbki sąsiadów).
+-Nieliniowa transformacja może prowadzić do rozbieżności w niektórych przypadkach.
+**************************************************************************************
+12. Dlaczego używa się "rozmytego rozkładu" w t-SNE?
+--Unikanie ostrych decyzji:
+
+Zamiast przypisywać punkty do jednego sąsiada, algorytm bierze pod uwagę wpływ wszystkich sąsiadów w zależności od ich odległości (dzięki funkcji Gaussa). W ten sposób uzyskuje bardziej realistyczny obraz podobieństw.
+
+Lokalne podobieństwa:
+Rozkład "rozmyty" pozwala algorytmowi lepiej skupić się na lokalnych relacjach, ponieważ punkty bliskie będą miały większe wartości, a odległe - mniejsze.
+Podsumowanie:
+"Rozmyty rozkład prawdopodobieństwa" i "soft probability distribution" to w zasadzie to samo, wyrażone w różnych językach.
+Oznaczają one sytuację, w której prawdopodobieństwa są przypisywane w sposób ciągły (miękki), zamiast być binarne.
+W t-SNE wykorzystuje się tę koncepcję, aby zbudować realistyczne relacje między punktami w przestrzeni wysokowymiarowej i lepiej odwzorować je w przestrzeni niskowymiarowej.
 
