@@ -8,12 +8,13 @@ SPIS TREŚCI:
 7. Jakie są ograniczenia algorytmu K-means?
 8. Dobór liczby klastrów w K-means.
 9. Czym jest random state? Jak go ustawić?
+10. Jaka jest różnica między kmeans.fit(df_scaled){TASK1} a kmeans.fit_predict(df_scaled){TASK2}?
 _____________________________________________
 
 1. Co to jest KLASTROWANIE?
 Grupowanie na klastry (klastrowanie) to technika eksploracyjnej analizy danych, która ma na celu grupowanie podobnych
 obiektów w zbiory (nazywane klastrami).
-
+**************************************************************************************
 2. Jaki jest cel klastrowania?
 ---Znajdowanie podobieństw w danych:
 Grupowanie pozwala zidentyfikować obiekty w danych, które są do siebie podobne na podstawie wybranych cech
@@ -25,18 +26,18 @@ Klastrowanie pomaga je odkryć bez wcześniejszej wiedzy na temat tych grup.
 ---Segmentacja:
 W różnych dziedzinach, takich jak marketing, biologia, czy analiza danych, klastrowanie pomaga podzielić dane na
 segmenty w celu lepszego zrozumienia grup.
-
+**************************************************************************************
 3. Jaki jest cel algorytmu K-means?
 Celem algorytmu K-means jest podzielenie zbioru danych na k podzbiorów (klastry), w taki sposób, aby punkty w każdym
 klastrze były jak najbardziej do siebie podobne, a różne klastry były od siebie jak najbardziej różne. Kluczową miarą
 jest odległość (najczęściej euklidesowa) między punktami i środkami klastrów.
-
+**************************************************************************************
 4. Co to ODLEGŁOŚĆ EUKLIDESOWA?
 Odległość euklidesowa to miara odległości między dwoma punktami w przestrzeni, obliczana zgodnie z zasadami geometrii
 euklidesowej. W praktyce jest to długość najkrótszego odcinka (prostej) łączącego te dwa punkty.
 Dla dwóch punktów A(x1, y1), B(x2, y2):
 	d(AB) = [ (x2-x1)^2 + (y2-y1)^2 ]^0.5
-
+**************************************************************************************
 5. Jak działa algorytm k-średnich (K-Means)?
 --> Wybór liczby klastrów (k):
 Na początku definiujemy liczbę klastrów, na które chcemy podzielić dane (np. n_clusters=3).
@@ -49,7 +50,7 @@ Algorytm oblicza nowy "środek" każdego klastra jako średnią współrzędnych
 --> Iteracja:
 Punkty są przypisywane do nowych centroidów, a centroidy są ponownie aktualizowane.
 Proces powtarza się, aż zmiany przestaną być istotne (tzn. centroidy przestają się przesuwać).
-
+**************************************************************************************
 6. Przykład działania algorytmu K-means.
 Wyobraź sobie dane 2D (punkty na płaszczyźnie):
 Wybierasz k=2 (chcesz podzielić punkty na 2 grupy).
@@ -58,7 +59,7 @@ Oblicza odległości każdego punktu do C1 i C2 Punkty najbliższe C1 przypisuje
 klastra 2.
 Oblicza nowe centroidy dla klastra 1 i klastra 2, biorąc średnie współrzędnych punktów w każdym klastrze.
 Powtarza proces przypisywania i aktualizacji centroidów, aż centroidy przestaną się zmieniać.
-
+**************************************************************************************
 7. Jakie są ograniczenia algorytmu K-means?
   -> Wybór liczby klastrów (k):
 Algorytm wymaga podania k, co w praktyce może być trudne do ustalenia bez wcześniejszej wiedzy o danych.
@@ -72,7 +73,7 @@ Można temu zaradzić, stosując technikę k-means++ do inteligentnej inicjaliza
   -> Odległość jako miara podobieństwa:
 Jeśli dane mają różne jednostki lub różną skalę, algorytm może działać źle, dlatego standaryzacja danych
 (np. przez StandardScaler) jest kluczowa.
-
+**************************************************************************************
 8. Dobór liczby klastrów w K-means.
 Dobór liczby klastrów to kluczowy krok w algorytmie K-means. W praktyce istnieją różne metody, które pomagają znaleźć
 optymalną wartość k:
@@ -91,7 +92,7 @@ Wybiera k, które najlepiej odróżnia dane rzeczywiste od losowych.
 Dla danych 2D lub 3D można wizualizować dane i ręcznie ocenić naturalne grupy.
   -> Specyfika problemu:
 Liczba klastrów może być narzucona przez domenę problemu (np. klasyfikacja biologiczna, segmentacja klientów itp.).
-
+**************************************************************************************
 9. Czym jest random state? Jak go ustawić?
 ---Czym jest random_state?
  * Parametr random_state kontroluje losowość inicjalizacji centrów klastrów w algorytmie K-means.
@@ -120,3 +121,16 @@ efektów zmiany liczby klastrów bez wpływu losowości.
 samego algorytmu K-means, ale ma na celu kontrolowanie losowości w procesie inicjalizacji centrów klastrów.
 42 to nawiązanie do książki "Autostopem przez Galaktykę" Douglasa Adamsa, gdzie 42 jest "odpowiedzią na ostateczne
 pytanie o życie, wszechświat i wszystko inne""
+**************************************************************************************
+10. Jaka jest różnica między kmeans.fit(df_scaled) a kmeans.fit_predict(df_scaled)?
+Cechą wspólną T1 i T2 jest standaryzacja danych:
+	scaler = StandardScaler()
+	df_scaled = scaler.fit_transform(df)
+Ale w T1:
+	kmeans.fit(df_scaled)
+Natomiast w T2:
+	kmeans.fit_predict(df_scaled)
+
+
+
+
