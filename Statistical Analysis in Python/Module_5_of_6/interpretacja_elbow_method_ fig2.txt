@@ -1,0 +1,16 @@
+Na podstawie wykresu można zauważyć, że inercja (sum of squares of distances) gwałtownie spada do pewnego momentu, a następnie zmniejsza się już tylko stopniowo. To miejsce, gdzie spadek znacząco się spowalnia, nazywane jest "łokciem".
+
+Analiza wykresu:
+Na wykresie widać, że największy spadek inercji następuje pomiędzy 
+k=1 a k=3.
+Dla k=3 krzywa przestaje znacząco opadać i zaczyna wypłaszczać się.
+
+Interpretacja:
+Optymalna liczba klastrów to 3, ponieważ po tej liczbie dodawanie kolejnych klastrów nie przynosi znaczącego zmniejszenia inercji. Oznacza to, że 3 klastry dobrze reprezentują strukturę danych.
+
+Dlaczego to działa?
+* Przy k<3: Dane są zbyt "skompresowane", co prowadzi do dużych błędów grupowania (wysoka inercja).
+*  Przy k=3: Dane są podzielone na logiczne grupy, a środki klastrów dobrze oddają strukturę danych.
+* Przy k>3: Dodawanie kolejnych klastrów nieznacznie poprawia inercję, ale może prowadzić do przegrupowania (overfitting).
+
+Podsumowując, 3 klastry wydają się najlepszym wyborem dla tych danych.
