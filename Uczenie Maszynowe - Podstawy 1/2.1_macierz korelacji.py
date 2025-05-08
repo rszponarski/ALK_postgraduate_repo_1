@@ -7,7 +7,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 houses = pd.read_csv("houses.csv")
-print(houses.isnull().sum())
 
 num_imputer = SimpleImputer(strategy='median')
 cat_imputer = SimpleImputer(strategy='most_frequent')
@@ -17,7 +16,7 @@ cat_features = houses.select_dtypes(include=['object']).columns.tolist()
 
 houses[num_features] = num_imputer.fit_transform(houses[num_features])
 houses[cat_features] = cat_imputer.fit_transform(houses[cat_features])
-print(houses.isnull().sum())
+
 plt.figure(figsize=(12,8))
 sns.heatmap(houses[num_features].corr(), annot=True, cmap='coolwarm', fmt='.2f', linewidth=0.5)
 plt.title("Korelacje cech w zbiorze Houses")
