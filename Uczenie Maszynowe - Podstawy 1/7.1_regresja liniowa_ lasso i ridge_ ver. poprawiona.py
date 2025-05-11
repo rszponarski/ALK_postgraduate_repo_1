@@ -17,8 +17,8 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
-import xgboost as xgb
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import numpy as np
 
 houses = pd.read_csv("houses.csv")
 
@@ -42,9 +42,6 @@ IQR = Q3 - Q1  # rozstęp międzykwartylowy
 
 lower_bound = Q1 - 1.5 * IQR
 upper_bound = Q3 + 1.5 * IQR
-
-# print(houses[(houses["Cena"] <= lower_bound) | (houses["Cena"] >= upper_bound)])
-print(houses[(houses["Cena"] <= lower_bound) | (houses["Cena"] >= upper_bound)].shape[0])
 
 houses = houses[(houses["Cena"] >= lower_bound) & (houses["Cena"] <= upper_bound)]
 
@@ -73,13 +70,17 @@ num_features.remove('Cena')
 X_train[num_features] = scaler.fit_transform(X_train[num_features])
 X_test[num_features] = scaler.transform(X_test[num_features])
 
-'''Regresja liniowa, lasso, ridge'''
+# Skalowanie danych
+scaler = StandardScaler()
+
+X_train[num_features] = scaler.fit_transform(X_train[num_features])
+X_test[num_features] = scaler.transform(X_test[num_features])
+
 # Lista modeli do przetestowania
 models = {
     "Linear Regression": LinearRegression(),
     "Ridge Regression": Ridge(alpha=1.0),
     "Lasso Regression": Lasso(alpha=1.0),
-    "XGBoost": xgb.XGBRegressor(objective="reg:squarederror", n_estimators=100, max_depth=6, learning_rate=0.1, subsample=0.8, random_state=42)
 }
 
 # Słowniki do przechowywania wyników
@@ -87,16 +88,20 @@ metrics = {"Model": [], "MAE": [], "RMSE": [], "R² Score": []}
 predictions = {name: None for name in models}
 coefficients = {name: None for name in models}
 
+# Pętla po modelach
 for name, model in models.items():
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
 
     predictions[name] = y_pred
 
-    metrics["Model"].append(name)
-    metrics["MAE"].append(mean_absolute_error(y_test, y_pred))
-    metrics["RMSE"].append(mean_squared_error(y_test, y_pred))
-    metrics["R² Score"].append(r2_score(y_test, y_pred))
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    r2 = r2_score(y_test, y_pred)
 
-    if hasattr(model, "coef_"):
-        coefficients[name] = model.coef_
+    metrics["Model"].append(name)
+    metrics["MAE"].append(mae)
+    metrics["RMSE"].append(rmse)
+    metrics["R² Score"].append(r2)
+
+    coefficients[name] = model.coef_
