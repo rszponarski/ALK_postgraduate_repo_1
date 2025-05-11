@@ -6,7 +6,7 @@ Powinien mieć:
     wykorzystywać 80% próbki do zbudowania jednego drzewa;
     i mieć random_state=42.
 Pamiętaj, że XGBoost nie ma współczynników, więc odniesienie do coefficients w pętli trzeba obudować warunkiem."""
-
+import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -104,4 +104,56 @@ for name, model in models.items():
     if hasattr(model, "coef_"):
         coefficients[name] = model.coef_
 
-print(metrics)
+#print(metrics)
+
+'''Sprawdź, co kryje się w wypełnionym obiekcie metrics. Konwertuj go na data frame, nadając mu nazwę results_df.
+Stwórz także zmienną importances, której przypiszesz współczynniki "ważności" cech modelu XGBoost. '''
+
+results_df = pd.DataFrame(metrics)
+#print(results_df)
+
+# współczynniki "ważności" cech modelu XGBoost
+importances = models["XGBoost"].feature_importances_
+print(importances)
+
+"""Wyświetlenie w przystępniejszej formie nazw cech i ich ważności"""
+
+# Stworzenie DataFrame z nazwami kolumn i ich ważnością
+feature_importance_df = pd.DataFrame({
+    "Cecha": X_train.columns,
+    "Ważność": importances
+})
+
+# Posortowanie od najważniejszej cechy
+feature_importance_df = feature_importance_df.sort_values(by="Ważność", ascending=False)
+#print(feature_importance_df)
+
+"""Sporządź wykres typu bar plot ważności cech z modelu XGBoost."""
+
+plt.figure(figsize=(30,10))
+plt.bar(range(len(importances)), importances, color='green')
+plt.xticks(range(len(importances)), [X_train.columns[i] for i in range(len(importances))])
+plt.xlabel("Cechy")
+plt.ylabel("Importances")
+plt.xticks(rotation=70)
+plt.title("Feature importances: XGBoost")
+plt.tight_layout()
+plt.savefig('feature_importances_chart.png')
+
+"""Sporządź cztery wykresy typu scatter plot, gdzie na osi X znajdą się wartości rzeczywiste, a na Y przewidywane
+- po jednym dla każdego z przygotowanych modeli. """
+
+def plot_model_vs_prediction(ax, model_name, y_true, y_pred):
+    ax.scatter(y_true, y_pred, color='green', alpha=0.5)
+    ax.plot([min(y_true), max(y_true)], [min(y_true), max(y_true)], color='red', linestyle='--')
+    ax.set_title(f"{model_name} - rzeczywiste vs przewidywane")
+    ax.set_xlabel("Wartości rzeczywiste")
+    ax.set_ylabel("Wartości przewidywane")
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+plot_model_vs_prediction(axes[0, 0], "Linear Regression", y_test, predictions["Linear Regression"])
+plot_model_vs_prediction(axes[0, 1], "Ridge Regression", y_test, predictions["Ridge Regression"])
+plot_model_vs_prediction(axes[1, 0], "Lasso Regression", y_test, predictions["Lasso Regression"])
+plot_model_vs_prediction(axes[1, 1], "XGBoost", y_test, predictions["XGBoost"])
+plt.savefig("model_vs_prediction_comparison.png")
