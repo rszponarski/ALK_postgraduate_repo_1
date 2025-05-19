@@ -18,6 +18,7 @@ from sklearn.linear_model import SGDClassifier
 from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
+
 imdb = pd.read_csv('imdb.csv')
 
 # Korpusy językowe - bazy słów
