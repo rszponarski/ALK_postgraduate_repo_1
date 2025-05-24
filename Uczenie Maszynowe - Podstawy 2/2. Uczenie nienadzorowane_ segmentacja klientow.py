@@ -121,3 +121,21 @@ results_df = pd.DataFrame(results)
 print(results_df)
 
 # Wizualizacja: KMeans na danych poddanych PCA
+
+''' Połączenie klastrów z oryginalnymi danymi'''
+df_original_with_clusters = df.copy()
+df_original_with_clusters["KMeans_Cluster"] = df_umap["KMeans_Cluster"]
+
+'''Wybrane cechy do analizy'''
+features_to_plot = ["WydatkiWino", "Dochod", "WydatkiMieso"]
+
+'''Tworzenie boxplotów'''
+for feature in features_to_plot:
+    plt.figure(figsize=(8, 6))
+    sns.boxplot(x="KMeans_Cluster", y=feature, data=df_original_with_clusters, palette="viridis")
+    plt.title(f"Rozkład cechy '{feature}' w zależności od klastra")
+    plt.xlabel("KMeans Cluster")
+    plt.ylabel(feature)
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(f"{feature}_boxplot.png")
