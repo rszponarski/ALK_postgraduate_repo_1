@@ -1,0 +1,3 @@
+# Ignorowanie folderów środowisk wirtualnych
+.venv/
+for_validation_0525/
