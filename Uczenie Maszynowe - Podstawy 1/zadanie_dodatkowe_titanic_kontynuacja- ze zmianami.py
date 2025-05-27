@@ -5,7 +5,6 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.linear_model import SGDClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
-from sklearn import metrics
 
 # Wczytanie i podział danych
 dataset = pd.read_csv('titanic_train.csv')
@@ -84,3 +83,48 @@ Następnie porównaj wyniki tych modeli — możesz do tego wykorzystać moduł 
 Dla każdego modelu stwórz obiekt przygotowanej klasy Metric, zawierający metryki: accuracy, f1 score,
 mean absolute error oraz współczynnik determinacji (R² Score). Zapisz te obiekty w słowniku metrics,
 używając nazw modeli jako kluczy. '''
+
+from sklearn.linear_model import SGDClassifier
+from sklearn import svm, tree
+from sklearn import metrics as sk_metrics
+from dataclasses import dataclass
+from typing import Union, Any
+
+# Definicja klasy Metric z dataclass
+@dataclass
+class Metric:
+    model: Union[SGDClassifier, svm.SVC, tree.DecisionTreeClassifier]
+    accuracy: Any
+    f1: Any
+    mean_abs_error: Any
+    r2: Any
+
+# Predykcje
+pred_sgd = model_sgd.predict(test_x)
+pred_svc = model_svc.predict(test_x)
+pred_tree = model_tree.predict(test_x)
+
+# Słownik na metryki
+metrics = {
+    "SGDClassifier": Metric(
+        model=model_sgd,
+        accuracy=sk_metrics.accuracy_score(test_y, pred_sgd),
+        f1=sk_metrics.f1_score(test_y, pred_sgd),
+        mean_abs_error=sk_metrics.mean_absolute_error(test_y, pred_sgd),
+        r2=sk_metrics.r2_score(test_y, pred_sgd)
+    ),
+    "SVC": Metric(
+        model=model_svc,
+        accuracy=sk_metrics.accuracy_score(test_y, pred_svc),
+        f1=sk_metrics.f1_score(test_y, pred_svc),
+        mean_abs_error=sk_metrics.mean_absolute_error(test_y, pred_svc),
+        r2=sk_metrics.r2_score(test_y, pred_svc)
+    ),
+    "DecisionTreeClassifier": Metric(
+        model=model_tree,
+        accuracy=sk_metrics.accuracy_score(test_y, pred_tree),
+        f1=sk_metrics.f1_score(test_y, pred_tree),
+        mean_abs_error=sk_metrics.mean_absolute_error(test_y, pred_tree),
+        r2=sk_metrics.r2_score(test_y, pred_tree)
+    )
+}
