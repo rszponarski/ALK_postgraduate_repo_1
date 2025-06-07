@@ -4,6 +4,7 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 # 1. Wczytanie danych
 df = pd.read_csv("iris.csv")
@@ -46,3 +47,20 @@ print("Przykładowe predykcje KNN:", y_pred_knn[:5])
 print("Przykładowe predykcje SVC:", svc_pred[:5])
 print("Przykładowe predykcje Gaussian:", gaussian_pred[:5])
 
+# 9. Finalne podsumowanie
+
+# Accuracy
+print("Accuracy KNN:", accuracy_score(y_test, y_pred_knn_encoded))
+print("Accuracy SVC:", accuracy_score(y_test, svc_pred_encoded))
+print("Accuracy Gaussian:", accuracy_score(y_test, gaussian_pred_encoded))
+print()
+
+# Classification report
+print("Classification Report KNN:\n", classification_report(y_test, y_pred_knn_encoded, target_names=encoder.classes_))
+print("Classification Report SVC:\n", classification_report(y_test, svc_pred_encoded, target_names=encoder.classes_))
+print("Classification Report Gaussian:\n", classification_report(y_test, gaussian_pred_encoded, target_names=encoder.classes_))
+
+# Confusion matrix
+print("Confusion Matrix KNN:\n", confusion_matrix(y_test, y_pred_knn_encoded))
+print("Confusion Matrix SVC:\n", confusion_matrix(y_test, svc_pred_encoded))
+print("Confusion Matrix Gaussian:\n", confusion_matrix(y_test, gaussian_pred_encoded))
