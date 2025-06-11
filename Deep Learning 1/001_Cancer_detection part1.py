@@ -2,6 +2,9 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
+from sklearn.metrics import confusion_matrix, classification_report
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Wyświetl wszystkie kolumny
 # pd.set_option('display.max_columns', None)
@@ -54,3 +57,30 @@ history = model.fit(
 
 preds = model.predict(X_test).reshape(-1)
 preds_binary = (preds > 0.5).astype(int)
+
+# 7. Ocena modelu
+
+cr = classification_report(y_test, preds_binary, target_names=label_encoder.classes_)
+cm = confusion_matrix(y_test, preds_binary)
+
+# 8. Macierz pomyłek
+plt.figure(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='viridis',
+            xticklabels=label_encoder.classes_,
+            yticklabels=label_encoder.classes_)
+plt.xlabel('Predicted Label')
+plt.ylabel('True Label')
+plt.title('Confusion Matrix')
+plt.tight_layout()
+plt.savefig("confusion_matrix_cancer_detection.png")
+
+# 9. Wizualizacja przebiegu treningu
+
+plt.figure(figsize=(8, 6))
+plt.plot(history.history["accuracy"], label = "Train accuracy")
+plt.plot(history.history["val_accuracy"], label = "Val accuracy")
+plt.xlabel("Epoch")
+plt.ylabel("Accuracy")
+plt.legend()
+plt.title("Model training accuracy")
+plt.savefig("model_training_accuracy.png")
