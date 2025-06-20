@@ -7,7 +7,6 @@ import numpy as np
 from tensorflow.keras.layers import LSTM, GRU, Dense, Dropout, BatchNormalization
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
-from sklearn.metrics import mean_squared_error
 
 # 1. Wstępne przygotowanie danych
 keras.utils.set_random_seed(43)
@@ -45,7 +44,6 @@ seq_length = 60
 X_train, y_train = create_sequences(train_scaled, seq_length)
 X_test, y_test = create_sequences(test_scaled, seq_length)
 
-
 # 5. Model LSTM
 
 model_lstm = Sequential([
@@ -58,33 +56,7 @@ model_lstm = Sequential([
 ])
 
 model_lstm.compile(optimizer=Adam(learning_rate=0.001), loss='mse')
-model_lstm.fit(X_train, y_train, epochs=10, batch_size=32)  # Trenowanie modelu
+# model_lstm.fit(X_train, y_train, epochs=10, batch_size=32)  # Trenowanie modelu
 
 # model_lstm.save("model_lstm.h5")  # Zapis modelu
 
-
-# 6. Model GRU
-
-model_gru = Sequential([
-    GRU(64, return_sequences=True, input_shape=(seq_length, 1)),
-    BatchNormalization(),
-    Dropout(0.2),
-    GRU(32),
-    Dropout(0.2),
-    Dense(1)
-])
-
-model_gru.compile(optimizer=Adam(learning_rate=0.001), loss='mse')
-model_gru.fit(X_train, y_train, epochs=10, batch_size=32)  # Trenowanie modelu
-
-"""# 6. Predykcje
-
-pred_lstm = scaler.inverse_transform(model_lstm.predict(X_test))
-pred_gru = scaler.inverse_transform(model_gru.predict(X_test))
-y_test_inv = scaler.inverse_transform(y_test)
-
-rmse_lstm = np.sqrt(mean_squared_error(y_test_inv, pred_lstm))
-rmse_gru = np.sqrt(mean_squared_error(y_test_inv, pred_gru))
-
-print("RMSE LSTM: ", rmse_lstm)
-print("RMSE GRU: ", rmse_gru)"""
