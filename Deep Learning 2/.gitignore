@@ -1,0 +1,4 @@
+# Ignorowanie folderów środowisk wirtualnych
+.venv/
+.idea/
+deeplearning2/
