@@ -2,3 +2,5 @@
 .venv/
 .idea/
 deeplearning2/
+plants_test/
+plants_train/
